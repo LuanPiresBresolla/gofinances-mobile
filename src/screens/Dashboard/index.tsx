@@ -2,7 +2,7 @@ import React from 'react';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 
 import { HighlightCard } from '../../components/HighlightCard';
-import { TransactionCard } from '../../components/TransactionCard';
+import { TransactionCard, Transaction } from '../../components/TransactionCard';
 
 import { 
   Container, 
@@ -20,42 +20,43 @@ import {
   TransactionsList,
 } from './styles';
 
+export type DataListProps = Transaction & {
+  id: string;
+}
+
 export function Dashboard() {
-  const data = [
+  const data: DataListProps[]  = [
     {
+      id: '1',
+      type: 'positive',
       title: 'Desenvolvimento de sites',
       amount: 'R$ 12.000,00',
       date: '13/04/2021',
       category: {
         name: 'Venda',
         icon: 'dollar-sign',
+      },
+    },
+    {
+      id: '2',
+      type: 'negative',
+      title: 'Hamburgueria Pizzy',
+      amount: 'R$ 59,00',
+      date: '13/02/2021',
+      category: {
+        name: 'Alimentacao',
+        icon: 'coffee',
       }
     },
     {
-      title: 'Desenvolvimento de app mobile',
-      amount: 'R$ 2.000,00',
+      id: '3',
+      type: 'negative',
+      title: 'Aluguel apartamento',
+      amount: 'R$ 1.200,00',
       date: '13/02/2021',
       category: {
-        name: 'Venda',
-        icon: 'dollar-sign',
-      }
-    },
-    {
-      title: 'Desenvolvimento de app mobile',
-      amount: 'R$ 2.000,00',
-      date: '13/02/2021',
-      category: {
-        name: 'Venda',
-        icon: 'dollar-sign',
-      }
-    },
-    {
-      title: 'Desenvolvimento de app mobile',
-      amount: 'R$ 2.000,00',
-      date: '13/02/2021',
-      category: {
-        name: 'Venda',
-        icon: 'dollar-sign',
+        name: 'Casa',
+        icon: 'shopping-bag',
       }
     }
   ];  
@@ -106,6 +107,7 @@ export function Dashboard() {
         <TransactionsList
           data={data}
           showsVerticalScrollIndicator={false}
+          keyExtractor={item => item.id}
           contentContainerStyle={{ paddingBottom: getBottomSpace()}}
           renderItem={({ item }) => (
             <TransactionCard data={item} />

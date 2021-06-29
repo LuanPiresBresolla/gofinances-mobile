@@ -11,27 +11,34 @@ import {
   Date,
 } from './styles';
 
+export type Transaction = {
+  type: 'positive' | 'negative';
+  title: string;
+  amount: string;
+  category: {
+    name: string;
+    icon: string;
+  },
+  date: string;
+};
+
 type TransactionCardProps = {
-  data: {
-    title: string;
-    amount: string;
-    category: {
-      name: string;
-      icon: string;
-    },
-    date: string;
-  }
+  data: Transaction;
 };
 
 export function TransactionCard({ data }: TransactionCardProps) {
   return (
     <Container>
       <Title>{data.title}</Title>
-      <Amount>{data.amount}</Amount>
+
+      <Amount type={data.type}>
+        {data.type === 'negative' && '- '}
+        {data.amount}
+      </Amount>
 
       <Footer>
         <Category>
-          <Icon name="dollar-sign" />
+          <Icon name={data.category.icon} />
           <CategoryName>{data.category.name}</CategoryName>
         </Category>
 
