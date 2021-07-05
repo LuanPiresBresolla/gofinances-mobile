@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacityProps } from 'react-native';
+import { RectButtonProperties } from 'react-native-gesture-handler';
 
 import { 
   Container,
@@ -7,7 +7,7 @@ import {
   Icon,
 } from './styles';
 
-type CategorySelectProps = TouchableOpacityProps & {
+type CategorySelectProps = RectButtonProperties & {
   title: string;
 };
 
