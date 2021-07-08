@@ -1,5 +1,5 @@
 import React from 'react';
-import { RectButtonProperties } from 'react-native-gesture-handler';
+import { RectButtonProps } from 'react-native-gesture-handler';
 
 import { 
   Container,
@@ -7,7 +7,7 @@ import {
   Icon,
 } from './styles';
 
-type CategorySelectProps = RectButtonProperties & {
+type CategorySelectProps = RectButtonProps & {
   title: string;
 };
 

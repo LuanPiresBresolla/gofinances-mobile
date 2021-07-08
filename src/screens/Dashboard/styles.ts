@@ -91,3 +91,9 @@ export const Title = styled.Text`
 `;
 
 export const TransactionsList = styled(FlatList as new () => FlatList<DataListProps>)``;
+
+export const LoadingContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
