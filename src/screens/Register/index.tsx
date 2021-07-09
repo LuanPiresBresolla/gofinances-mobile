@@ -86,7 +86,7 @@ export function Register () {
       const responseParse = response ? JSON.parse(response) : [];
 
       await AsyncStorage.setItem(storageKey, JSON.stringify([...responseParse, newTransaction]));
-
+      
       reset();
       setTransactionType('');
       setCategory({ key: 'category', name: 'Categoria' });
