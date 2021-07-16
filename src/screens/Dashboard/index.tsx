@@ -7,6 +7,7 @@ import { getBottomSpace } from 'react-native-iphone-x-helper';
 import { HighlightCard } from '../../components/HighlightCard';
 import { TransactionCard, Transaction } from '../../components/TransactionCard';
 import theme from '../../global/styles/theme';
+import { useAuth } from '../../hooks/useAuth';
 
 import { 
   Container, 
@@ -47,6 +48,7 @@ export function Dashboard() {
   const [transaction, setTransaction] = useState<DataListProps[]>([]);
   const [highlightData, setHighlightData] = useState<highlightData>({} as highlightData);
   const [loading, setLoading] = useState(true);
+  const { signOut, user } = useAuth();
 
   function getLastTransactionInfo(collection: DataListProps[], type: 'up' | 'down') {
     const lastTransaction = new Date(
@@ -126,15 +128,15 @@ export function Dashboard() {
           <Header>
             <UserWrapper>
               <UserInfo>
-                <Photo source={{ uri: 'https://github.com/luanpiresbresolla.png' }} />
+                <Photo source={{ uri: user.photo }} />
 
                 <User>
                   <UserGreeting>Olá,</UserGreeting>
-                  <UserName>Luan Bresolla</UserName>
+                  <UserName>{user.name}</UserName>
                 </User>
               </UserInfo>
 
-              <LogoutButton>
+              <LogoutButton onPress={signOut}>
                 <Icon name="power" />
               </LogoutButton>
             </UserWrapper>
