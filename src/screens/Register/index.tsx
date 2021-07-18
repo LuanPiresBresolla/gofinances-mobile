@@ -23,14 +23,13 @@ import {
   Fields,
   TransactionsTypes,
 } from './styles';
+import { useAuth } from '../../hooks/useAuth';
 
 
 type FormData = {
   name: string;
   amount: string;
 };
-
-const storageKey = '@gofinances:transactions';
 
 const schema = Yup.object().shape({
   name: Yup.string().required('Informe o nome'),
@@ -42,6 +41,7 @@ const schema = Yup.object().shape({
 export function Register () {
   const { control, handleSubmit, reset, formState: { errors } } = useForm({ resolver: yupResolver(schema) });
   const { navigate } = useNavigation();
+  const { user } = useAuth();
 
   const [transactionType, setTransactionType] = useState('');
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
@@ -82,10 +82,10 @@ export function Register () {
     };
 
     try {
-      const response = await AsyncStorage.getItem(storageKey);
+      const response = await AsyncStorage.getItem(`@gofinances:transactions_user:${user.id}`);
       const responseParse = response ? JSON.parse(response) : [];
 
-      await AsyncStorage.setItem(storageKey, JSON.stringify([...responseParse, newTransaction]));
+      await AsyncStorage.setItem(`@gofinances:transactions_user:${user.id}`, JSON.stringify([...responseParse, newTransaction]));
       
       reset();
       setTransactionType('');

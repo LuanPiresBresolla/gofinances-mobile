@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Platform } from 'react-native';
 import { Alert } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
@@ -63,12 +63,14 @@ export function SignIn () {
             enabled={!loading}
           />
           
-          <SignInSocialButton 
-            title="Entrar com Apple" 
-            svg={AppleSvg} 
-            onPress={handleSignInWithApple}
-            enabled={!loading}
-          />
+          {Platform.OS === 'ios' && (
+            <SignInSocialButton 
+              title="Entrar com Apple" 
+              svg={AppleSvg} 
+              onPress={handleSignInWithApple}
+              enabled={!loading}
+            />
+          )}
         </FooterWrapper>
 
         {loading && (

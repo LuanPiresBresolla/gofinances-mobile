@@ -14,13 +14,12 @@ import theme from '../../global/styles/theme';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { ptBR } from 'date-fns/locale';
 
-const storageKey = '@gofinances:transactions';
-
 import { Container, Header, Title, Content, MonthSelect, MonthSelectButton, SelectIcon, Month, LoadingContainer } from './styles';
 import { addMonths, format, subMonths } from 'date-fns';
 import { useEffect } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { useCallback } from 'react';
+import { useAuth } from '../../hooks/useAuth';
 
 type DataListProps = Transaction & {
   id: string;
@@ -39,6 +38,7 @@ export function Resume() {
   const [totalByCategories, setTotalByCategories] = useState<TotalByCategory[]>([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
 
   function handleDateChange(action: 'next' | 'prev') {
     setLoading(true);
@@ -53,7 +53,7 @@ export function Resume() {
   async function loadTransactions() {    
     setLoading(true);
 
-    const response = await AsyncStorage.getItem(storageKey);
+    const response = await AsyncStorage.getItem(`@gofinances:transactions_user:${user.id}`);
     const responseParse = response ? JSON.parse(response) : [];
 
     const expensives: DataListProps[] = responseParse.filter((item: DataListProps) => 
